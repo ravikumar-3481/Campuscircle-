@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alumni Network</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif;}
+    :root {
+      --primary:#2563eb; --primary-dark:#1d4ed8; --secondary:#64748b;
+      --light:#f8fafc; --dark:#1e293b; --card-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
+    body {background:var(--light); color:var(--dark); line-height:1.6;}
+    .container {max-width:1200px; margin:0 auto; padding:0 20px;}
+
+    /* Navbar */
+    header {background:transparent; position:sticky; top:0; z-index:100; padding:1rem 0;}
+    .header-content {display:flex; justify-content:space-between; align-items:center;}
+    .logo {font-size:1.6rem; font-weight:700; color:var(--primary);}
+    .menu-icon {cursor:pointer; width:28px; height:20px; display:flex; flex-direction:column; justify-content:space-between;}
+    .menu-icon span{height:3px; width:100%; background-color:var(--dark); border-radius:3px;}
+    .menu-icon.active span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+    .menu-icon.active span:nth-child(2){opacity:0;}
+    .menu-icon.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+    .nav-menu {display:none; position:absolute; top:100%; left:0; width:100%; border-radius:15px; background:white; padding:1rem 0; z-index:99; box-shadow:var(--card-shadow);}
+    .nav-menu.active {display:block;}
+    .nav-menu ul {list-style:none; text-align:center;}
+    .nav-menu li {margin:1rem 0;}
+    .nav-menu a {text-decoration:none; color:var(--dark); font-size:1.1rem; font-weight:500; padding:0.6rem 1.5rem; border-radius:8px; display:flex; align-items:center; justify-content:center;}
+    .nav-menu a:hover {color:var(--primary);}
+    .nav-menu a i {margin-right:0.5rem;}
+
+    /* Hero */
+    .hero {height:25vh; display:flex; align-items:center; justify-content:center; text-align:center;
+      background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%); border-radius:0 0 20px 20px; margin-bottom:2rem;}
+    .hero h1 {font-size:2rem; color:var(--primary); font-weight:700;}
+    .hero p {font-size:1rem; color:var(--secondary); margin-top:0.5rem;}
+
+    /* Controls */
+    .controls {display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:1.5rem;}
+    .controls input, .controls select, .controls button {
+      padding:10px 15px; font-size:14px; border-radius:8px; border:1px solid #ccc; outline:none; transition:0.3s;
+    }
+    .controls input:focus, .controls select:focus {border-color:var(--primary); box-shadow:0 0 5px rgba(37,99,235,0.4);}
+    .controls button {background:var(--primary); color:white; border:none; cursor:pointer;}
+    .controls button:hover {background:var(--primary-dark);}
+
+    /* Table */
+    table {width:100%; border-collapse:collapse; background:white; border-radius:12px; overflow:hidden; box-shadow:var(--card-shadow);}
+    th, td {padding:12px 15px; text-align:left; border-bottom:1px solid #eee;}
+    th {background:#e0f2fe; cursor:pointer;}
+    tr:hover {background:#f0f9ff; transition:0.3s;}
+
+    /* Modal */
+    .modal {display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:200;}
+    .modal-content {background:white; padding:20px; border-radius:12px; width:90%; max-width:500px; box-shadow:var(--card-shadow); position:relative;}
+    .modal-content h2 {margin-bottom:15px; color:var(--primary);}
+    .modal-content p {margin:8px 0;}
+    .close-btn {position:absolute; top:10px; right:15px; font-size:20px; cursor:pointer; color:var(--dark);}
+    .close-btn:hover {color:red;}
+
+    @media(max-width:768px){
+      .controls {flex-direction:column; align-items:center;}
+      .controls input, .controls select, .controls button {width:90%;}
+      .nav-menu {width: 40%;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">Campus<span style="color:green;">Circle</span></div>
+        <div class="menu-icon" id="menuIcon"><span></span><span></span><span></span></div>
+        <nav class="nav-menu" id="navMenu">
+          <ul>
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#"><i class="fas fa-calendar-alt"></i> Events</a></li>
+            <li><a href="#"><i class="fas fa-users"></i> Network</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>Alumni Network</h1>
+      <p>Connect and interact with your fellow alumni.</p>
+    </div>
+  </section>
+
+  <!-- Filter & Sort -->
+  <div class="container controls">
+    <input type="text" id="filterInput" placeholder="Search by name, city, or branch">
+    <select id="sortSelect">
+      <option value="">Sort by</option>
+      <option value="name-asc">Name ↑</option>
+      <option value="name-desc">Name ↓</option>
+      <option value="year-asc">Year ↑</option>
+      <option value="year-desc">Year ↓</option>
+    </select>
+    <button onclick="resetFilter()">Reset</button>
+  </div>
+
+  <!-- Alumni Table -->
+  <div class="container">
+    <table id="alumniTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>City</th>
+          <th>Branch</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div id="alumniModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2 id="modalName"></h2>
+      <p><strong>Age:</strong> <span id="modalAge"></span></p>
+      <p><strong>City:</strong> <span id="modalCity"></span></p>
+      <p><strong>Branch:</strong> <span id="modalBranch"></span></p>
+      <p><strong>Graduation Year:</strong> <span id="modalYear"></span></p>
+      <p><strong>Current Job:</strong> <span id="modalJob"></span></p>
+      <p><strong>Current Company:</strong> <span id="modalCompany"></span></p>
+      <p><strong>Mobile:</strong> <span id="modalMobile"></span></p>
+      <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+      <p><strong>LinkedIn:</strong> <a id="modalLinkedin" href="#" target="_blank">View Profile</a></p>
+    </div>
+  </div>
+
+<script>
+  // Navbar toggle
+  const menuIcon = document.getElementById('menuIcon');
+  const navMenu = document.getElementById('navMenu');
+  menuIcon.addEventListener('click', () => {
+    menuIcon.classList.toggle('active');
+    navMenu.classList.toggle('active');
+  });
+
+  // Alumni data
+  let alumniData = [
+    {name:"Alice", age:25, city:"New York", branch:"CSE", year:2018, job:"Software Engineer", company:"Google", mobile:"123-456-7890", email:"alice@example.com", linkedin:"https://linkedin.com/in/alice"},
+    {name:"Bob", age:28, city:"Los Angeles", branch:"ECE", year:2017, job:"Hardware Engineer", company:"Intel", mobile:"555-222-3333", email:"bob@example.com", linkedin:"https://linkedin.com/in/bob"},
+    {name:"Charlie", age:26, city:"Chicago", branch:"ME", year:2019, job:"Mechanical Designer", company:"Tesla", mobile:"999-888-7777", email:"charlie@example.com", linkedin:"https://linkedin.com/in/charlie"}
+  ];
+
+  function renderTable(data){
+    const tbody = document.querySelector("#alumniTable tbody");
+    tbody.innerHTML = "";
+    data.forEach(a => {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${a.name}</td><td>${a.city}</td><td>${a.branch}</td><td>${a.year}</td>`;
+      row.addEventListener("click", ()=>openModal(a));
+      tbody.appendChild(row);
+    });
+  }
+
+  // Modal
+  function openModal(alumni){
+    document.getElementById("modalName").textContent = alumni.name;
+    document.getElementById("modalAge").textContent = alumni.age;
+    document.getElementById("modalCity").textContent = alumni.city;
+    document.getElementById("modalBranch").textContent = alumni.branch;
+    document.getElementById("modalYear").textContent = alumni.year;
+    document.getElementById("modalJob").textContent = alumni.job;
+    document.getElementById("modalCompany").textContent = alumni.company;
+    document.getElementById("modalMobile").textContent = alumni.mobile;
+    document.getElementById("modalEmail").textContent = alumni.email;
+    document.getElementById("modalLinkedin").href = alumni.linkedin;
+    document.getElementById("alumniModal").style.display = "flex";
+  }
+  function closeModal(){ document.getElementById("alumniModal").style.display = "none"; }
+
+  // Render
+  renderTable(alumniData);
+
+  // Filter
+  document.getElementById("filterInput").addEventListener("input", (e)=>{
+    const query = e.target.value.toLowerCase();
+    const filtered = alumniData.filter(a =>
+      a.name.toLowerCase().includes(query) ||
+      a.city.toLowerCase().includes(query) ||
+      a.branch.toLowerCase().includes(query)
+    );
+    renderTable(filtered);
+  });
+
+  // Sort
+  document.getElementById("sortSelect").addEventListener("change",(e)=>{
+    let sorted = [...alumniData];
+    const value = e.target.value;
+    if(value==="name-asc") sorted.sort((a,b)=> a.name.localeCompare(b.name));
+    if(value==="name-desc") sorted.sort((a,b)=> b.name.localeCompare(a.name));
+    if(value==="year-asc") sorted.sort((a,b)=> a.year - b.year);
+    if(value==="year-desc") sorted.sort((a,b)=> b.year - a.year);
+    renderTable(sorted);
+  });
+
+  function resetFilter(){
+    document.getElementById("filterInput").value="";
+    document.getElementById("sortSelect").value="";
+    renderTable(alumniData);
+  }
+</script>
+
+</body>
+</html>

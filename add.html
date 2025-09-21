@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Alumni</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif;}
+    :root{
+      --primary:#2563eb; --primary-dark:#1d4ed8; --secondary:#64748b;
+      --light:#f8fafc; --dark:#1e293b; --card-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
+    body{background:var(--light); color:var(--dark); line-height:1.6;}
+    .container{ max-width:700px; margin:30px auto; padding:0 20px;}
+
+    /* Glass Header */
+    header { 
+      background: rgba(255, 255, 255, 0.3); /* semi-transparent */
+      backdrop-filter: blur(10px); /* blur effect */
+      -webkit-backdrop-filter: blur(10px);
+      position: sticky; 
+      top:0; 
+      height: 4rem;
+      z-index:100; 
+      padding:1rem 0; 
+      border-radius: 50px;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+    .header-content { display:flex; justify-content:space-between; align-items:center;margin-top: -2.5rem}
+    .logo { font-size:1.6rem; font-weight:700; color:var(--primary);}
+    .menu-icon { cursor:pointer; width:28px; height:20px; display:flex; flex-direction:column; justify-content:space-between;}
+    .menu-icon span{ height:3px; width:100%; background-color:var(--dark); border-radius:3px;}
+    .menu-icon.active span:nth-child(1){ transform:translateY(8px) rotate(45deg);}
+    .menu-icon.active span:nth-child(2){ opacity:0;}
+    .menu-icon.active span:nth-child(3){ transform:translateY(-8px) rotate(-45deg);}
+    .nav-menu { display:none; position:absolute; top:100%; left:0; width:100%; border-radius:15px; background:white; padding:1rem 0; z-index:99; box-shadow:var(--card-shadow);}
+    .nav-menu.active { display:block;}
+    .nav-menu ul { list-style:none; text-align:center;}
+    .nav-menu li { margin:1rem 0;}
+    .nav-menu a { text-decoration:none; color:var(--dark); font-size:1.1rem; font-weight:500; padding:0.6rem 1.5rem; border-radius:8px; display:flex; align-items:center; justify-content:center;}
+    .nav-menu a:hover { color:var(--primary);}
+    .nav-menu a i { margin-right:0.5rem;}
+
+    /* Hero */
+    .hero { margin-top: -4rem;height:38vh; display:flex; align-items:center; justify-content:center; text-align:center; background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%); border-radius:0 0 20px 20px; margin-bottom:2rem;}
+    .hero h1 { font-size:2rem; color:var(--primary); font-weight:700;}
+    .hero p { font-size:1rem; color:var(--secondary); margin-top:0.5rem;}
+
+    /* Form */
+    form { background:white; padding:20px; border-radius:12px; box-shadow:var(--card-shadow);}
+    form label { display:block; margin-top:12px; font-weight:600;}
+    form input { width:100%; padding:10px; margin-top:5px; border-radius:6px; border:1px solid #ccc; outline:none;}
+    form input:focus { border-color:var(--primary); box-shadow:0 0 5px rgba(37,99,235,0.4);}
+    form button { margin-top:20px; padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;}
+    form button:hover { background:var(--primary-dark);}
+
+    /* Responsive */
+    @media(max-width:768px){
+      .container{ padding:0 15px;}
+      .nav-menu {
+        width: 40%;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">Campus<span style="color:green;">Circle</span></div>
+        <div class="menu-icon" id="menuIcon"><span></span><span></span><span></span></div>
+        <nav class="nav-menu" id="navMenu">
+          <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="database.html"><i class="fas fa-database"></i> Show Alumni</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>Add Alumni</h1>
+      <p>Enter the alumni details to add to the network</p>
+    </div>
+  </section>
+
+  <!-- Add Alumni Form -->
+  <div class="container">
+    <form id="addAlumniForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" required>
+
+      <label for="age">Age</label>
+      <input type="number" id="age" required>
+
+      <label for="city">City</label>
+      <input type="text" id="city" required>
+
+      <label for="branch">Branch/Course</label>
+      <input type="text" id="branch" required>
+
+      <label for="year">Graduation Year</label>
+      <input type="number" id="year" required>
+
+      <label for="currentJob">Current Job</label>
+      <input type="text" id="currentJob">
+
+      <label for="company">Current Company</label>
+      <input type="text" id="company">
+
+      <label for="mobile">Mobile Number</label>
+      <input type="text" id="mobile">
+
+      <label for="email">Email</label>
+      <input type="email" id="email">
+
+      <label for="linkedin">LinkedIn URL</label>
+      <input type="url" id="linkedin">
+
+      <button type="submit">Add Alumni</button>
+    </form>
+  </div>
+
+<script>
+  // Navbar toggle
+  const menuIcon = document.getElementById('menuIcon');
+  const navMenu = document.getElementById('navMenu');
+  menuIcon.addEventListener('click', () => {
+    menuIcon.classList.toggle('active');
+    navMenu.classList.toggle('active');
+  });
+
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      if(window.innerWidth <= 768){
+        menuIcon.classList.remove('active');
+        navMenu.classList.remove('active');
+      }
+    });
+  });
+
+  // Form submit
+  const form = document.getElementById('addAlumniForm');
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const alumni = {
+      name: document.getElementById('name').value,
+      age: parseInt(document.getElementById('age').value),
+      city: document.getElementById('city').value,
+      branch: document.getElementById('branch').value,
+      year: parseInt(document.getElementById('year').value),
+      currentJob: document.getElementById('currentJob').value,
+      company: document.getElementById('company').value,
+      mobile: document.getElementById('mobile').value,
+      email: document.getElementById('email').value,
+      linkedin: document.getElementById('linkedin').value
+    };
+
+    try {
+      const res = await fetch('/api/alumni', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(alumni)
+      });
+
+      if(res.ok){
+        alert('Alumni added successfully!');
+        form.reset();
+      } else {
+        alert('Failed to add alumni.');
+      }
+    } catch(err){
+      console.error('Error:', err);
+      alert('Error adding alumni.');
+    }
+  });
+</script>
+
+</body>
+</html>
