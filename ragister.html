@@ -490,7 +490,7 @@
 
             try {
                 console.log('Sending registration request with data:', formData);  // Debug log
-                const response = await fetch('http://127.0.0.1:5000/api/register', {  // Updated URL
+                const response = await fetch('https://ba-2-x511.onrender.com/register', {  // Updated URL
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -502,7 +502,7 @@
                 message.textContent = result.message || result.error || 'Registration failed.';
                 message.className = `message ${response.ok ? 'success' : 'error'}`;
                 if (response.ok) {
-                    setTimeout(() => window.location.href = 'alumni-login.html', 2000);
+                    setTimeout(() => window.location.href = 'login.html', 2000);
                 }
             } catch (error) {
                 message.textContent = 'Error: Could not connect to the server. Check if the server is running at http://127.0.0.1:5000.';
